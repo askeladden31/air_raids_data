@@ -11,22 +11,16 @@ variable "project" {
   default     = "dtc-de-course-412311"
 }
 
-variable "region" {
-  description = "Region"
+#variable "region" {
+#  description = "Region"
   #Update the below to your desired region
-  default     = "europe-central2"
-}
+#  default     = "europe-central2"
+#}
 
 variable "location" {
   description = "Project Location"
   #Update the below to your desired location
   default     = "europe-central2"
-}
-
-variable "bq_dwh" {
-  description = "BigQuery dataset serving as data warehouse"
-  #Update the below to what you want your dataset to be called
-  default     = "air_raids_data"
 }
 
 variable "gcs_bucket_name" {
@@ -38,4 +32,22 @@ variable "gcs_bucket_name" {
 variable "gcs_storage_class" {
   description = "Bucket Storage Class"
   default     = "STANDARD"
+}
+
+variable "bq_dwh" {
+  description = "BigQuery dataset serving as data warehouse"
+  #Update the below to what you want your dataset to be called
+  default     = "air_raids_data"
+}
+
+variable "bq_dbt_dev" {
+  description = "BigQuery dataset serving as data warehouse"
+  #Update the below to what you want your dataset to be called
+  default     = "air_raids_data_dbt"
+}
+
+variable "bq_dbt_prod" {
+  description = "BigQuery dataset serving as data warehouse"
+  #Update the below to what you want your dataset to be called
+  default     = "air_raids_data_dbt_prod"
 }
