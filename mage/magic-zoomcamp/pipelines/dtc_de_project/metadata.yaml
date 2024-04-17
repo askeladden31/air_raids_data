@@ -1,0 +1,158 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - export_air_raid_official
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_air_raid_official
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_air_raid_official
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - load_air_raid_official_gcs
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: export_air_raid_official
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_air_raid_official
+  uuid: export_air_raid_official
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - export_air_raid_aux
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_air_raid_aux
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_air_raid_aux
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - load_air_raid_aux_gcs
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: export_air_raid_aux
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_air_raid_aux
+  uuid: export_air_raid_aux
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - export_air_raid_official_bq
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_air_raid_official_gcs
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks:
+  - export_air_raid_official
+  uuid: load_air_raid_official_gcs
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: export_air_raid_official_bq
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_air_raid_official_gcs
+  uuid: export_air_raid_official_bq
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - export_air_raid_aux_bq
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_air_raid_aux_gcs
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks:
+  - export_air_raid_aux
+  uuid: load_air_raid_aux_gcs
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: export_air_raid_aux_bq
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - load_air_raid_aux_gcs
+  uuid: export_air_raid_aux_bq
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-04-03 19:43:23.275705+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: dtc_de_project
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+updated_at: '2024-04-09 23:15:19'
+uuid: dtc_de_project
+variables_dir: /home/src/mage_data/magic-zoomcamp
+widgets: []
