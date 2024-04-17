@@ -23,16 +23,16 @@ variable "location" {
   default     = "europe-central2"
 }
 
-variable "bq_dataset_name" {
-  description = "My BigQuery Dataset Name"
+variable "bq_dwh" {
+  description = "BigQuery dataset serving as data warehouse"
   #Update the below to what you want your dataset to be called
-  default     = "demo_dataset"
+  default     = "air_raids_data"
 }
 
 variable "gcs_bucket_name" {
-  description = "My Storage Bucket Name"
+  description = "GCS bucket for storing raw data"
   #Update the below to a unique bucket name
-  default     = "dtc-de-course-412311-terraform-demo-terra-bucket"
+  default     = "air_raids_data"
 }
 
 variable "gcs_storage_class" {
