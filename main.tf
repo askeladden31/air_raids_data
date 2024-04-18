@@ -14,9 +14,9 @@ provider "google" {
 }
 
 resource "google_compute_instance" "default" {
-  name         = "test-instance"
-  machine_type = "e2-micro"
-  zone         = "us-east1-b"
+  name         = "final-project"
+  machine_type = "e2-standard-4"
+  zone         = var.zone
 
   boot_disk {
     initialize_params {
@@ -31,12 +31,20 @@ resource "google_compute_instance" "default" {
     }
   }
 
-   metadata = {
-     startup-script = file("startup.sh")
-   }
+  metadata = {
+    startup-script = templatefile("./startup.tpl", {
+      project         = var.project,
+      region          = var.region,
+      location        = var.location,
+      gcs_bucket_name = var.gcs_bucket_name,
+      bq_dwh          = var.bq_dwh,
+      bq_dbt_dev      = var.bq_dbt_dev,
+      bq_dbt_prod     = var.bq_dbt_prod,
+      credentials     = file(var.credentials)
+    })
+  }
+
 }
-
-
 
 resource "google_storage_bucket" "data-lake" {
   name          = var.gcs_bucket_name

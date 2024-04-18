@@ -15,7 +15,6 @@ echo "Current directory: $(pwd)"
   sudo apt update
   sudo apt install -y docker-ce
   echo "Finished Docker installation."
-} &> /var/log/docker_installation.log
 
 
 # Install Git
@@ -26,11 +25,25 @@ git clone https://github.com/mage-ai/compose-quickstart.git mage-quickstart
 git clone https://github.com/askeladden31/air_raids_data.git
 
 # Copy project folder into mage folder
-cp -r air_raids_data/mage/magic-zoomcamp mage-quickstart/magic-zoomcamp
+cp -r ./air_raids_data/mage/magic-zoomcamp ./mage-quickstart/magic-zoomcamp
 
-# Copy .env
-cp env_generated_by_terraform mage-quickstart/magic-zoomcamp/.env
+# Create .env
+cat <<EOF > ./mage-quickstart/.env
+PROJECT_NAME=magic-zoomcamp
 
-# Copy credentials
-cp key.json mage-quickstart/secrets.json
+GCP_PROJECT=${project}
+GCP_REGION=${region}
+GCP_LOCATION=${location}
+GCP_BUCKET=${gcs_bucket_name}
+GCP_DWH=${bq_dwh}
+GCP_DEV=${bq_dbt_dev}
+GCP_PROD=${bq_dbt_prod}
 
+EOF
+
+# Create credentiials
+cat <<EOF > ./mage-quickstart/secrets.json
+${credentials}
+EOF
+
+} &> /var/log/startup.log
