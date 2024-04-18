@@ -152,7 +152,6 @@ settings:
 spark_config: {}
 tags: []
 type: python
-updated_at: '2024-04-09 23:15:19'
 uuid: dtc_de_project
 variables_dir: /home/src/mage_data/magic-zoomcamp
 widgets: []
