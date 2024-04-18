@@ -1,0 +1,12 @@
+triggers:
+- envs: []
+  last_enabled_at: 2024-04-18 20:01:42.374920
+  name: check for updates
+  pipeline_uuid: dtc_de_project
+  schedule_interval: 0 1-4 * * *
+  schedule_type: time
+  settings: null
+  sla: null
+  start_time: 2024-04-18 20:00:00
+  status: active
+  variables: {}
