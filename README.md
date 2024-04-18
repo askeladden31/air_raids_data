@@ -34,75 +34,72 @@ Transformations are defined using dbt. The source tables are combined into one, 
 
 NOTE: my dbt Cloud trial expired a few days before the deadline, and free account does not allow triggering the dbt deployment jobs through an API. At the current stage, the deployment job is scheduled to run at "5 1-4 * * *" in order to sync with the Mage pipeline.
 
-#TODO: move the dbt project from dbt Cloud into the Mage pipeline
+#TODO: move the dbt project from dbt Cloud into the Mage pipeline in order to trigger dbt sequentially
 
 ## Dashboard
 
 A report generated in Looker Studio connects to BigQuery to fetch the data and visualize it. The resulting dashboard can be found here: https://lookerstudio.google.com/reporting/e64f161a-75b2-4ee8-997e-5b2ac08e59eb
 
-The project is currently live, and will remain so until April 25 (until my GCP trial expires and I will have to stop all GCP services). The dbt project and the Looker dashboard will continue to live on, but will not recieve any more updates.
+The project is currently live, and will remain so until April 25 (until my GCP trial expires and I will have to stop all GCP services). The dbt project and the Looker dashboard will continue to live on, but will stop recieving updates.
 
 ## Reproducibility
 
 To reproduce the Mage pipeline:
 
-In your GCP project, create a service account with the following roles: 
-BigQuery Admin
-Compute Admin
-Service Usage Consumer
-Storage Admin
-
-Generate a private key for this service account.
-
-Open cloud shell (already has terraform installed).
-
-Choose a work directory and save the private key as "./keys/key.json".
-
-Download main.tf and variables.tf from this repository into your work directory.
+- In your GCP project, create a service account with the following roles:  
+BigQuery Admin  
+Compute Admin  
+Service Usage Consumer  
+Storage Admin  
+- Generate a private key for this service account.
+- Open cloud shell (already has terraform installed).
+- Choose a work directory and save the private key as "./keys/key.json".
+- Download main.tf and variables.tf from this repository into your work directory.  
 
 DISCLAIMER: I will not be held responsible for any potential costs incurring from provisioning and maintaining the infrastructure in your GCP. It is your responsibility to monitor your billing account, activated services, amount of free credits (if any), etc. Do not run this unless you fully understand what you're doing.
 
-Open variables.tf with your favorite editor.
+- Open variables.tf with your favorite editor.
+- Confirm that "credentials" variable holds the relative path to your generated key.
+- Change the "project" variable to refer to your GCP project.
+- Change "region", "location", "zone" if required.
 
-Confirm that "credentials" variable holds the relative path to your generated key.
+The remaining variables contain the names for the GCS bucket and BQ datasets that will be used by the Mage pipeline and dbt. You can either leave them as is or choose different names. 
 
-Change the "project" variable to refer to your GCP project.
-
-Change "region", "location", "zone" if required.
-
-The remaining variables contain the names for the GCS bucket and BQ datasets that will be used by the Mage pipeline and dbt. You can either leave them as is or choose your own names. 
-
-Save and close.
-
-Open "main.tf".
+- Save and close.
+- Open "main.tf".  
 
 Note the machine_type for the "google_compute_instance" resource. It is currently set to "e2-standard-4". This will deploy a VM of that type and will incur the associated costs, in accordance with GCP pricing. You can change this to a different (cheaper) machine type, but I didn't test these, so your results may vary from mine.
 
-Close "main.tf"
+- Close "main.tf".  
+- Execute the following commands:  
+terraform plan  
+terraform apply  
+Answer "yes" when prompted.  
+  
+This will provision the resources, deploy a VM and start the Mage project inside. The Mage pipeline should now be active and auto-triggering at the set schedule.
 
-Execute the following commands:
+Currently, the dbt project is deployed in the cloud, and has to be reproduced separately.
 
-terraform plan
-terraform apply
-
-Answer "yes" when prompted.
-
-This will provision the resources, deploy a VM and start the Mage project inside.
-
-As of this deadline () The dbt project is deployed in the cloud, and has to be reproduced separately.
-
-#TODO: move the dbt project from dbt Cloud into the Mage pipeline in order to streamline this configuration
+#TODO: move the dbt project from dbt Cloud into the Mage pipeline in order to eliminate the need for these steps and streamline the configuration
 
 To reproduce the dbt project:
 
-Fork this repository.
+- Fork this repository.
+- Create a dbt project and configure it as described here: https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/04-analytics-engineering/dbt_cloud_setup.md
+- When configuring the git repository in your dbt project, make it point to the "air_raids" directory in your fork.
+- Under Development credentials, set the dataset to the value of the "bq_dbt_dev" variable from variables.tf (if you changed it).
+- In dbt Cloud IDE create a branch for the repo. 
+- Edit models/schema.yaml, so that "database" points to your GCP project name, and "schema" points to the value of the "bq_dwh" variable from variables.tf (if you changed it).
+- In the Production environment settings, under Deployment credentials, set the dataset to the value of the "bq_dbt_prod" variable from variables.tf (if you changed it).
+- Create a deploy job to run "dbt build" at the desired intervals.
+- Commit and sync your branch. Then create a pull request. Then merge the pull request with the main branch.
 
-Create a dbt project and configure it as described here: https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/04-analytics-engineering/dbt_cloud_setup.md
+The dbt project should now be running and triggering the deploy job according to the chosen schedule. The results are saved in the corresponding dataset in the data warehouse (BigQuery).
 
-When configuring the repository in your dbt project, make it point to the "air_raids" directory in your fork.
+To reproduce the report:
 
-Under Development Credentials, set the dataset to the value of the "bq_dbt_dev" variable from variables.tf
+- Open Looker Studio, create a BigQuery connector to the production dataset and fetch the fact table. Add your own tiles and visualizations.
 
-In dbt Cloud IDE create a branch for the repo. Edit 
-  
-...
+To destroy the provisioned infrastructure in GCP:
+
+- Run "terraform destroy" from your work directory in Google shell. Ideally, this should delete the bucket, datasets and the VM. However, it is best to double check, rerun the command if it shows any errors on the first time, and, if all else fails, stop and delete the services manually.
