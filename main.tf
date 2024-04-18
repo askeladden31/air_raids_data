@@ -13,6 +13,30 @@ provider "google" {
   region      = var.region
 }
 
+resource "google_compute_instance" "default" {
+  name         = "test-instance"
+  machine_type = "e2-micro"
+  zone         = "us-east1-b"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+
+   metadata = {
+     startup-script = file("startup.sh")
+   }
+}
+
+
 
 resource "google_storage_bucket" "data-lake" {
   name          = var.gcs_bucket_name

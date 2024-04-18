@@ -1,8 +1,6 @@
 variable "credentials" {
-  description = "My Credentials"
-  default     = "~/dtc_de/keys/my-creds.json"
-  #ex: if you have a directory where this file is called keys with your service account json file
-  #saved there as my-creds.json you could use default = "./keys/my-creds.json"
+  description = "Credentials for running terraform"
+  default     = "./keys/key.json"
 }
 
 
@@ -11,16 +9,16 @@ variable "project" {
   default     = "dtc-de-course-412311"
 }
 
-#variable "region" {
-#  description = "Region"
+variable "region" {
+  description = "Region"
   #Update the below to your desired region
-#  default     = "europe-central2"
-#}
+  default     = "us-east1"
+}
 
 variable "location" {
   description = "Project Location"
   #Update the below to your desired location
-  default     = "europe-central2"
+  default     = "us-east1"
 }
 
 variable "gcs_bucket_name" {
