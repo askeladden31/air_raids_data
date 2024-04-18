@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+
+  - name: staging_final
+    database: dtc-de-course-412311
+    schema: air_raids_data
+    tables:
+      - name: air_raid_official
+      - name: air_raid_volunteer

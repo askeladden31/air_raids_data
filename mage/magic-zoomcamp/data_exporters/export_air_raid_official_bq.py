@@ -16,11 +16,19 @@ def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
 
     Docs: https://docs.mage.ai/design/data-loading#bigquery
     """
-    table_id = 'dtc-de-course-412311.final_project.air_raid_official'
+    
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
-    BigQuery.with_config(ConfigFileLoader(config_path, config_profile), location='us-east1').export(
+    config = ConfigFileLoader(config_path, config_profile)
+
+    project = config['GCP_PROJECT']
+    dataset = config['GCP_DWH']
+    location = config['GCP_LOCATION']
+
+    table_id = f'{project}.{dataset}.air_raid_official'
+
+    BigQuery.with_config(config, location=location).export(
         df,
         table_id,
         if_exists='replace',  # Specify resolution policy if table name already exists

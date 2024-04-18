@@ -19,10 +19,12 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
-    bucket_name = 'dtc-de-course-412311-mage'
+    config = ConfigFileLoader(config_path, config_profile)
+
+    bucket_name = config['GCP_BUCKET']
     object_key = 'air_raid_aux.parquet'
 
-    GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).export(
+    GoogleCloudStorage.with_config(config).export(
         df,
         bucket_name,
         object_key,

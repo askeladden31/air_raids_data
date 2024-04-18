@@ -132,6 +132,14 @@ default:
   WEAVIATE_INSTANCE_API_KEY: YOUR-WEAVIATE-API-KEY
   WEAVIATE_INFERENCE_API_KEY: YOUR-OPENAI-API-KEY
   WEAVIATE_COLLECTION: collectionn_name
+  
+  GCP_PROJECT: "{{ env_var('GCP_PROJECT') }}"
+  GCP_REGION: "{{ env_var('GCP_REGION') }}"
+  GCP_LOCATION: "{{ env_var('GCP_LOCATION') }}"
+  GCP_BUCKET: "{{ env_var('GCP_BUCKET') }}"
+  GCP_DWH: "{{ env_var('GCP_DWH') }}"
+  GCP_DEV: "{{ env_var('GCP_DEV') }}"
+  GCP_PROD: "{{ env_var('GCP_PROD') }}"
 dev:
   POSTGRES_CONNECT_TIMEOUT: 10
   POSTGRES_DBNAME: "{{ env_var('POSTGRES_DBNAME') }}"
