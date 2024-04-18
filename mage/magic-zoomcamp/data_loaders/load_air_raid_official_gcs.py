@@ -19,10 +19,12 @@ def load_from_google_cloud_storage(*args, **kwargs):
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
-    bucket_name = 'dtc-de-course-412311-mage'
+    config = ConfigFileLoader(config_path, config_profile)
+
+    bucket_name = config['GCP_BUCKET']
     object_key = 'air_raid_official.parquet'
 
-    return GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).load(
+    return GoogleCloudStorage.with_config(config).load(
         bucket_name,
         object_key,
     )
