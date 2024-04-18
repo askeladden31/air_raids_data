@@ -46,4 +46,7 @@ cat <<EOF > ./mage-quickstart/secrets.json
 ${credentials}
 EOF
 
+cd mage-quickstart
+docker compose up -d
+
 } &> /var/log/startup.log
