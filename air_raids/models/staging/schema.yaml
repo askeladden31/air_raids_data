@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: staging
+    database: dtc-de-course-412311
+    schema: trips_data_all_
+
+    tables:
+      - name: green_tripdata
+      - name: yellow_tripdata
+      - name: fhv_tripdata
+
+  - name: staging_final
+    database: dtc-de-course-412311
+    schema: final_project
+    tables:
+      - name: air_raid_official
+      - name: air_raid_volunteer
