@@ -63,7 +63,7 @@ DISCLAIMER: I will not be held responsible for any potential costs incurring fro
 - Change the "project" variable to refer to your GCP project.
 - Change "region", "location", "zone" if required.
 
-The remaining variables contain the names for the GCS bucket and BQ datasets that will be used by the Mage pipeline and dbt. You can either leave them as is or choose different names. 
+The remaining variables contain the names for the GCS bucket and BQ datasets that will be used by the Mage pipeline and dbt. The bucket name needs to be changed to something globally unique. As for the datasets, you can either leave them as is or choose something different. 
 
 - Save and close.
 - Open "main.tf".  
