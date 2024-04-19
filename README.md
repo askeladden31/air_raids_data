@@ -40,7 +40,7 @@ NOTE: my dbt Cloud trial expired a few days before the deadline, and free accoun
 
 A report generated in Looker Studio connects to BigQuery to fetch the data and visualize it. The resulting dashboard can be found here: https://lookerstudio.google.com/reporting/e64f161a-75b2-4ee8-997e-5b2ac08e59eb
 
-The project is currently live, and will remain so until April 25 (until my GCP trial expires and I will have to stop all GCP services). The dbt project and the Looker dashboard will continue to live on, but will stop recieving updates.
+The project is currently live, and will remain so until April 25 (until my GCP trial expires and I will have to stop all GCP services). If you will be reviewing this project after April 25, a snapshot of the report is included here: https://github.com/askeladden31/air_raids_data/blob/main/Air_raid_alerts_in_Ukraine___Feb_2022-present_day.pdf
 
 ## Reproducibility
 
